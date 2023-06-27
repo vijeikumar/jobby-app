@@ -28,7 +28,7 @@ const Header = props => {
           <li className="job-heading">Jobs</li>
         </Link>
       </ul>
-      <div className="">
+      <div>
         <button type="button" className="logout-button" onClick={onClickLogOut}>
           Logout
         </button>

@@ -1,6 +1,6 @@
 import './index.css'
 
-import {component} from 'react'
+import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 
@@ -11,8 +11,8 @@ const apiStatusConstants = {
   success: 'SUCCESS',
 }
 
-class ProfileDetails extends component {
-  state = {profileList: {}, apiStatus: apiStatusConstants.initial}
+class ProfileDetails extends Component {
+  state = {profileList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
     this.getProfileDetails()
@@ -33,16 +33,14 @@ class ProfileDetails extends component {
     if (response.ok === true) {
       const data = await response.json()
       const profileData = {
-        name: data.name,
-        profileImageUrl: data.profile_image_url,
-        shortBio: data.short_bio,
+        name: data.profile_details.name,
+        profileImageUrl: data.profile_details.profile_image_url,
+        shortBio: data.profile_details.short_bio,
       }
       this.setState({
         apiStatus: apiStatusConstants.success,
         profileList: profileData,
       })
-    } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -50,14 +48,14 @@ class ProfileDetails extends component {
     const {profileList} = this.state
     const {profileImageUrl, name, shortBio} = profileList
     return (
-      <div className="">
+      <div className="profile-container">
         <img
           src={profileImageUrl}
           alt="profile logo"
           className="profile-logo"
         />
-        <h1 className="">{name}</h1>
-        <p className="">{shortBio}</p>
+        <h1 className="name-heading">{name}</h1>
+        <p className="bio">{shortBio}</p>
       </div>
     )
   }

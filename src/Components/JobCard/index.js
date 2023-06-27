@@ -1,9 +1,10 @@
-import './index.css'
 import {Link} from 'react-router-dom'
 
 import {AiFillStar} from 'react-icons/ai'
 
 import {HiLocationMarker, HiMail} from 'react-icons/hi'
+
+import './index.css'
 
 const JobCard = props => {
   const {jobDetails} = props
@@ -19,7 +20,7 @@ const JobCard = props => {
   } = jobDetails
 
   return (
-    <Link to={`jobs/${id}`} className="link-id">
+    <Link to={`/jobs/${id}`} className="link-item">
       <li className="job-list-item">
         <div className="company-container">
           <div>

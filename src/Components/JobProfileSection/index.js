@@ -139,6 +139,7 @@ class JobProfileSection extends Component {
             type="button"
             onClick={this.getJobDetails}
             data-testid="searchButton"
+            className="search-button"
           >
             <BsSearch className="search-icon" />
           </button>

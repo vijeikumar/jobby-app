@@ -68,7 +68,7 @@ class JobItemDetails extends Component {
     const {params} = history
     const {id} = params
     const jwtToken = Cookies.get('jwt_token')
-    const url = `https://apis.ccbp.in/jobs${id}`
+    const url = `https://apis.ccbp.in/jobs/${id}`
     const options = {
       header: {
         Authorization: `Bearer ${jwtToken}`,
@@ -79,7 +79,7 @@ class JobItemDetails extends Component {
     const response = await fetch(url, options)
     console.log(response)
     if (response.ok === true) {
-      const data = response.json()
+      const data = await response.json()
       const updatedData = this.getFormattedData(data.job_details)
       const updatedSkillData = data.similar_jobs.map(eachSimilarJob =>
         this.getFormattedSkillData(eachSimilarJob),
@@ -115,7 +115,11 @@ class JobItemDetails extends Component {
       <div className="full-job-item-container">
         <div className="job-items-container">
           <div className="logo-image-container">
-            <img src={companyLogoUrl} className="company-logo" alt="" />
+            <img
+              src={companyLogoUrl}
+              className="company-logo"
+              alt="website logo"
+            />
             <div className="title-container">
               <h1 className="company-title-head">{title}</h1>
               <div className="rating-container">
@@ -185,7 +189,7 @@ class JobItemDetails extends Component {
       />
       <h1 className="failure-heading">Oops! Something Went Wrong</h1>
       <p className="failure-desc">
-        We cannot seem to find the page you are looking for.
+        We cannot seem to find the page you are looking for
       </p>
       <button
         className="job-item-failure-button"
@@ -209,11 +213,12 @@ class JobItemDetails extends Component {
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderJobItemDetails()
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
 
       case apiStatusConstants.failure:
         return this.renderFailure()
-      case apiStatusConstants.inProgress:
-        return this.renderLoadingView()
+
       default:
         return null
     }

@@ -19,7 +19,8 @@ class Login extends Component {
     this.setState({errorMsg, showSubmitError: true})
   }
 
-  onSubmitForm = async () => {
+  onSubmitForm = async event => {
+    event.preventDefault()
     const {userName, password} = this.props
     const userDetails = {userName, password}
     const loginUrl = 'https://apis.ccbp.in/login'
@@ -28,7 +29,7 @@ class Login extends Component {
       method: 'POST',
     }
     const response = await fetch(loginUrl, options)
-    const data = response.json()
+    const data = await response.json()
     if (response.ok === true) {
       this.onSubmitSuccess(data.jwt_token)
     } else {
@@ -76,7 +77,7 @@ class Login extends Component {
           placeholder="Password"
           className="user-input"
           onChange={this.changePassword}
-          type="text"
+          type="password"
         />
       </>
     )
@@ -98,12 +99,12 @@ class Login extends Component {
           />
 
           <form className="form-container" onSubmit={this.onSubmitForm}>
-            <div className="input-container">{this.renderUsername}</div>
-            <div className="input-container">{this.renderPassword}</div>
+            <div className="input-container">{this.renderUsername()}</div>
+            <div className="input-container">{this.renderPassword()}</div>
             <button className="login-button" type="submit">
               Login
             </button>
-            {showSubmitError && <p className="error-msg">{errorMsg}</p>}
+            {showSubmitError && <p className="error-msg">*{errorMsg}</p>}
           </form>
         </div>
       </div>

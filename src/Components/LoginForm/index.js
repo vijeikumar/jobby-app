@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 import {Redirect} from 'react-router-dom'
 
-class Login extends Component {
+class LoginForm extends Component {
   state = {username: '', password: '', showSubmitError: false, errorMsg: ''}
 
   onSubmitSuccess = jwtToken => {
@@ -21,14 +21,15 @@ class Login extends Component {
 
   onSubmitForm = async event => {
     event.preventDefault()
-    const {userName, password} = this.props
+    const {userName, password} = this.state
     const userDetails = {userName, password}
-    const loginUrl = 'https://apis.ccbp.in/login'
+    const url = 'https://apis.ccbp.in/login'
     const options = {
-      body: JSON.stringify(userDetails),
       method: 'POST',
+      body: JSON.stringify(userDetails),
     }
-    const response = await fetch(loginUrl, options)
+
+    const response = await fetch(url, options)
     const data = await response.json()
     if (response.ok === true) {
       this.onSubmitSuccess(data.jwt_token)
@@ -49,7 +50,7 @@ class Login extends Component {
     const {username} = this.state
     return (
       <>
-        <label htmlFor="username" className="label">
+        <label htmlFor="userName" className="label">
           USERNAME
         </label>
         <input
@@ -57,7 +58,7 @@ class Login extends Component {
           className="user-input"
           value={username}
           onChange={this.changeUsername}
-          id="username"
+          id="userName"
           placeholder="Username"
         />
       </>
@@ -104,7 +105,11 @@ class Login extends Component {
             <button className="login-button" type="submit">
               Login
             </button>
-            {showSubmitError && <p className="error-msg">*{errorMsg}</p>}
+            {showSubmitError === true ? (
+              <p className="error-msg">{errorMsg}</p>
+            ) : (
+              ''
+            )}
           </form>
         </div>
       </div>
@@ -112,4 +117,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default LoginForm

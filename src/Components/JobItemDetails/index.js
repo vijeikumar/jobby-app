@@ -64,13 +64,13 @@ class JobItemDetails extends Component {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
-    const {history} = this.state
-    const {params} = history
+    const {match} = this.props
+    const {params} = match
     const {id} = params
     const jwtToken = Cookies.get('jwt_token')
     const url = `https://apis.ccbp.in/jobs/${id}`
     const options = {
-      header: {
+      headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
       method: 'GET',
@@ -118,7 +118,7 @@ class JobItemDetails extends Component {
             <img
               src={companyLogoUrl}
               className="company-logo"
-              alt="website logo"
+              alt="job details company logo"
             />
             <div className="title-container">
               <h1 className="company-title-head">{title}</h1>
@@ -154,7 +154,7 @@ class JobItemDetails extends Component {
           <h1 className="skills-heading">Skills</h1>
           <ul className="skills-container">
             {skills.map(eachSkill => (
-              <SkillsCard key={eachSkill.id} skillDetails={eachSkill} />
+              <SkillsCard key={eachSkill.name} skillDetails={eachSkill} />
             ))}
           </ul>
           <h1 className="life-company-heading">Life at Company</h1>

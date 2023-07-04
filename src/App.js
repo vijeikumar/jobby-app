@@ -6,14 +6,14 @@ import './App.css'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import Home from './Components/Home'
 import Jobs from './Components/Jobs'
-import Login from './Components/Login'
+import LoginForm from './Components/LoginForm'
 import ProtectedRoute from './Components/ProtectedRoute'
 import JobItemDetails from './Components/JobItemDetails'
 import NotFound from './Components/NotFound'
 
 const App = () => (
   <Switch>
-    <Route exact path="/login" component={Login} />
+    <Route exact path="/login" component={LoginForm} />
     <ProtectedRoute exact path="/" component={Home} />
 
     <ProtectedRoute exact path="/jobs" component={Jobs} />
